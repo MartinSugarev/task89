@@ -23,6 +23,39 @@ export default class Application extends EventEmitter {
 
     this.emit(Application.events.READY);
   }
+  _loading(){
+
+  }
+
+  async _load(){
+   await fetch('https://swapi.boom.dev/api/planets', {
+     method: 'GET',
+   })
+   .then(res => res.json())
+   .then(data => {
+     this.data = data.results
+     let box = document.querySelector(".box");
+     for(let i = 0; i < data.results.length; i++){
+      let planet = data.results[i]
+       box.innerHTML += this._render(planet);
+     }
+   })
+   let content = document.querySelector(".progress.is-small.is-primary")
+   let box2 = document.querySelector(".box").innerHTML;
+  if(box2 !== " "){
+    content.style.display = "none"
+  }
+  }
+  _create(){
+    
+  }
+  
+  _startLoading(){
+   
+  }
+  _stopLoading(){
+  
+  }
 
   _render({ name, terrain, population }) {
     return `
