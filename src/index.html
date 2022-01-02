@@ -13,5 +13,91 @@
     <div class="main">
       <progress class="progress is-small is-primary" max="100">0</progress>
     </div>
+    <script>
+  class Application {
+  static get events() {
+    return {
+      READY: "ready",
+    };
+  }
+
+  constructor() {
+     
+    const box = document.createElement("div");
+    box.classList.add("box");
+    box.innerHTML = this._render({
+      name: "Placeholder",
+      terrain: "placeholder",
+      population: 0,
+    });
+
+    document.body.querySelector(".main").appendChild(box);
+      this.data = [];
+   // this.emit(Application.events.READY);
+  }
+  _loading(){
+
+  }
+  async _load(){
+   await fetch('https://swapi.boom.dev/api/planets', {
+     method: 'GET',
+   })
+   .then(res => res.json())
+   .then(data => {
+     this.data = data.results
+     let box = document.querySelector(".box");
+     for(let i = 0; i < data.results.length; i++){
+      let planet = data.results[i]
+       box.innerHTML += this._render(planet);
+     }
+   })
+   let content = document.querySelector(".progress.is-small.is-primary")
+   let box2 = document.querySelector(".box").innerHTML;
+  if(box2 !== " "){
+    content.style.display = "none"
+  }
+  }
+  _create(){
+    
+  }
+  
+  _startLoading(){
+   
+  }
+  _stopLoading(){
+  
+  }
+
+  _render({ name, terrain, population, image }) {
+    return `
+<article class="media">
+  <div class="media-left">
+    <figure class="image is-64x64">
+      <img src="${image}" alt="planet">
+    </figure>
+  </div>
+  <div class="media-content">
+    <div class="content">
+    <h4>${name}</h4>
+      <p>
+        <span class="tag">${terrain}</span> <span class="tag">${population}</span>
+        <br>
+      </p>
+    </div>
+  </div>
+</article>
+    `;
+  }
+}
+window.addEventListener("DOMContentLoaded", () => {
+  // This block will be executed once the page is loaded and ready
+  const app = new Application();
+  // Used to access the app instance by the automated tests
+ // app._load();
+ app._create()
+  window.__JS_APP = app;
+});
+    </script>
+
   </body>
 </html>
