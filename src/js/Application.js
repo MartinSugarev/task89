@@ -26,7 +26,7 @@ export default class Application extends EventEmitter {
     this.emit(Application.events.READY);
 
     const prot = document.querySelector(".progress.is-small.is-primary");
-    prot.setAttribute("name", "_loading");
+    prot.setAttribute("_loading", " ");
 
   }
   _loading(){
