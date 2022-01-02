@@ -11,6 +11,8 @@ export default class Application extends EventEmitter {
   constructor() {
     super();
 
+    
+
     const box = document.createElement("div");
     box.classList.add("box");
     box.innerHTML = this._render({
@@ -22,9 +24,13 @@ export default class Application extends EventEmitter {
     document.body.querySelector(".main").appendChild(box);
 
     this.emit(Application.events.READY);
+
+    const prot = document.querySelector(".progress.is-small.is-primary");
+    prot.setAttribute("name", "_loading");
+
   }
   _loading(){
-
+    
   }
 
   async _load(){
