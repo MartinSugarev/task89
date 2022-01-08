@@ -8,9 +8,11 @@ export default class Application extends EventEmitter {
     };
   }
 
-  constructor() {
+  constructor(el) {
     super();
-
+  //  this._loading = loading
+  let main = document.querySelector(".main")
+  main.innerHTML = el
     
 
     const box = document.createElement("div");
@@ -33,7 +35,6 @@ export default class Application extends EventEmitter {
   async _load(){
     let url = `https://swapi.boom.dev/api/planets`
     let allPlanets = [];
-    let nextList = '';
     while(url !== null){
       await fetch(url, {
         method: 'GET',
@@ -89,6 +90,11 @@ export default class Application extends EventEmitter {
   _stopLoading(){
   
   }
+ 
+  loading(){
+
+  }
+
 
   _render({ name, terrain, population }) {
     return `
