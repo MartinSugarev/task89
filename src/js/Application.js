@@ -11,9 +11,12 @@ export default class Application extends EventEmitter {
   constructor(el) {
     super();
   //  this._loading = loading
+  //let main = document.querySelector(".main")
+  //main.innerHTML = el
+  const _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+
   let main = document.querySelector(".main")
-  main.innerHTML = el
-    
+   main.innerHTML = _loading
 
     const box = document.createElement("div");
     box.classList.add("box");
@@ -91,9 +94,6 @@ export default class Application extends EventEmitter {
   
   }
  
-  loading(){
-
-  }
 
 
   _render({ name, terrain, population }) {

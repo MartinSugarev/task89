@@ -21,10 +21,12 @@
     };
   }
 
-  constructor(el) {
+  constructor() {
 
-     let main = document.querySelector(".main")
-     main.innerHTML = el
+const _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+
+   let main = document.querySelector(".main")
+    main.innerHTML = _loading
 
 
     const box = document.createElement("div");
@@ -126,8 +128,8 @@
 }
 window.addEventListener("DOMContentLoaded", () => {
   // This block will be executed once the page is loaded and ready
-  const _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
-  const app = new Application(_loading);
+ // const _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+  const app = new Application();
   //app._load();
   //app._create()
   // Used to access the app instance by the automated tests
