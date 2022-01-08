@@ -16,7 +16,7 @@ export default class Application extends EventEmitter {
    this._loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
 
   let main = document.querySelector(".main")
-   main.innerHTML = _loading
+   main.innerHTML = this._loading
 
     const box = document.createElement("div");
     box.classList.add("box");
