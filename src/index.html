@@ -11,7 +11,7 @@
   </head>
   <body>
     <div class="main">
-      <progress class="progress is-small is-primary" max="100" ></progress>
+      
     </div>
     <script>
   class Application{
@@ -21,7 +21,12 @@
     };
   }
 
-  constructor() {
+  constructor(el) {
+
+    let arrg = el 
+     let main = document.querySelector(".main")
+     main.appendChild(arrg)
+
 
     const box = document.createElement("div");
     box.classList.add("box");
@@ -97,6 +102,8 @@
   
   }
 
+ 
+
   _render({ name, terrain, population, image }) {
     return `
 <article class="media">
@@ -120,9 +127,10 @@
 }
 window.addEventListener("DOMContentLoaded", () => {
   // This block will be executed once the page is loaded and ready
-  const app = new Application();
-  app._load();
-  app._create()
+  const _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+  const app = new Application(_loading);
+  //app._load();
+  //app._create()
   // Used to access the app instance by the automated tests
   window.__JS_APP = app;
 });
