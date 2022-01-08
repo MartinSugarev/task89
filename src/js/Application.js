@@ -78,7 +78,7 @@ export default class Application extends EventEmitter {
      
    
   if(box.innerHTML !== " "){
-    let content = document.querySelector(".progress.is-small.is-primary")
+    let content = document.querySelector("progress")
     content.style.display = "none"
   }
   }
