@@ -69,6 +69,8 @@ export default class Application extends EventEmitter {
   //  content.style.display = "none"
   //}
   //console.log(allPlanets);
+  let content = document.querySelector("progress")
+  content.style.display = "none"
   
   return allPlanets
   }
