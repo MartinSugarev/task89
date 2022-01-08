@@ -13,10 +13,7 @@ export default class Application extends EventEmitter {
   //  this._loading = loading
   //let main = document.querySelector(".main")
   //main.innerHTML = el
-   this._loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
 
-  let main = document.querySelector(".main")
-   main.innerHTML = this._loading
 
     const box = document.createElement("div");
     box.classList.add("box");
@@ -29,9 +26,12 @@ export default class Application extends EventEmitter {
     document.body.querySelector(".main").appendChild(box);
 
     this.emit(Application.events.READY);
+    this._loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
 
-    const prot = document.querySelector(".progress.is-small.is-primary");
-    prot.setAttribute("_loading", "");
+    let main = document.querySelector(".main")
+     main.innerHTML = this._loading
+   // const prot = document.querySelector(".progress.is-small.is-primary");
+   // prot.setAttribute("_loading", "");
 
   }
  
