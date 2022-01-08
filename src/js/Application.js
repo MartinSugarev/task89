@@ -26,7 +26,7 @@ export default class Application extends EventEmitter {
     this.emit(Application.events.READY);
 
     const prot = document.querySelector(".progress.is-small.is-primary");
-    prot.setAttribute("_loading", " ");
+    prot.setAttribute("_loading", "");
 
   }
   _loading(){
@@ -34,18 +34,36 @@ export default class Application extends EventEmitter {
   }
 
   async _load(){
-   await fetch('https://swapi.boom.dev/api/planets', {
-     method: 'GET',
-   })
-   .then(res => res.json())
-   .then(data => {
-     this.data = data.results
-     let box = document.querySelector(".box");
-     for(let i = 0; i < data.results.length; i++){
-      let planet = data.results[i]
-       box.innerHTML += this._render(planet);
-     }
-   })
+    
+      await fetch(`https://swapi.boom.dev/api/planets`, {
+        method: 'GET',
+      })
+      .then(res => res.json())
+      .then(data => {
+        let next = data.next
+        this.data = data.results
+        let box = document.querySelector(".box");
+        for(let i = 0; i < data.results.length; i++){
+         let planet = data.results[i]
+          box.innerHTML += this._render(planet);
+        }
+          while(next !== null){
+            await fetch(next, {
+              method: 'GET'
+            }).then(res => res.json())
+              .then(data => {
+                next = data.next
+                let info = data.results
+                for(let i = 0; i < info.results.length; i++){
+                  let planet = info.results[i]
+                   box.innerHTML += this._render(planet)
+                }
+              })
+          }
+        
+      })
+    
+  
    let content = document.querySelector(".progress.is-small.is-primary")
    let box2 = document.querySelector(".box").innerHTML;
   if(box2 !== " "){
