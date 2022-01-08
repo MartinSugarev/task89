@@ -8,6 +8,8 @@ export default class Application extends EventEmitter {
     };
   }
 
+  _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+
   constructor() {
     super();
   //  this._loading = loading
@@ -26,13 +28,13 @@ export default class Application extends EventEmitter {
     document.body.querySelector(".main").appendChild(box);
 
     this.emit(Application.events.READY);
-    this._loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
-
-    let main = document.querySelector(".main")
-     main.innerHTML = this._loading
+    //this._loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+    this._loading = document.createElement("progress")
+   // let main = document.querySelector(".main")
+    // main.innerHTML = this._loading
    // const prot = document.querySelector(".progress.is-small.is-primary");
    // prot.setAttribute("_loading", "");
-
+   
   }
  
   async _load(){
