@@ -29,49 +29,58 @@ export default class Application extends EventEmitter {
     prot.setAttribute("_loading", "");
 
   }
-  _loading(){
-    
-  }
-
+ 
   async _load(){
-    
-      await fetch(`https://swapi.boom.dev/api/planets`, {
+    let url = `https://swapi.boom.dev/api/planets`
+    let allPlanets = [];
+    let nextList = '';
+    while(url !== null){
+      await fetch(url, {
         method: 'GET',
       })
       .then(res => res.json())
       .then(data => {
-        let next = data.next
-        this.data = data.results
-        let box = document.querySelector(".box");
+         url = data.next
+       // let planets = data.results
+        //let box = document.querySelector(".box");
         for(let i = 0; i < data.results.length; i++){
          let planet = data.results[i]
-          box.innerHTML += this._render(planet);
+         // box.innerHTML += this._render(planet);
+         allPlanets.push(planet)
         }
-          while(next !== null){
-            await fetch(next, {
-              method: 'GET'
-            }).then(res => res.json())
-              .then(data => {
-                next = data.next
-                let info = data.results
-                for(let i = 0; i < info.results.length; i++){
-                  let planet = info.results[i]
-                   box.innerHTML += this._render(planet)
-                }
-              })
-          }
-        
       })
+      
+    }
+     
+
+    
+      
     
   
-   let content = document.querySelector(".progress.is-small.is-primary")
-   let box2 = document.querySelector(".box").innerHTML;
-  if(box2 !== " "){
+  // let content = document.querySelector(".progress.is-small.is-primary")
+   //let box2 = document.querySelector(".box").innerHTML;
+  //if(box2 !== " "){
+  //  content.style.display = "none"
+  //}
+  //console.log(allPlanets);
+  
+  return allPlanets
+  }
+ async _create(){
+    let planets = await this._load();
+    let box = document.querySelector(".box");
+    for(let i = 0; i < planets.length; i++){
+      let planet = planets[i]
+       box.innerHTML += this._render(planet)
+      //allPlanets.push(planet)
+    }
+
+     
+   
+  if(box.innerHTML !== " "){
+    let content = document.querySelector(".progress.is-small.is-primary")
     content.style.display = "none"
   }
-  }
-  _create(){
-    
   }
   
   _startLoading(){

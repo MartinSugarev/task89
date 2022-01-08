@@ -8,14 +8,13 @@
       content="Used as a boilerplate for tasks in the 'HTML, CSS and SASS' course in boom.dev"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="/src/js/Application.js" type="text/javascript"></script>
   </head>
   <body>
     <div class="main">
       <progress class="progress is-small is-primary" max="100" ></progress>
     </div>
     <script>
-  class Application {
+  class Application{
   static get events() {
     return {
       READY: "ready",
@@ -23,7 +22,7 @@
   }
 
   constructor() {
-     
+
     const box = document.createElement("div");
     box.classList.add("box");
     box.innerHTML = this._render({
@@ -33,33 +32,62 @@
     });
 
     document.body.querySelector(".main").appendChild(box);
-      this.data = [];
-   // this.emit(Application.events.READY);
-  }
-  _loading(){
+    const prot = document.querySelector(".progress.is-small.is-primary");
+    prot.setAttribute("_loading", "");
 
   }
+ 
   async _load(){
-   await fetch('https://swapi.boom.dev/api/planets', {
-     method: 'GET',
-   })
-   .then(res => res.json())
-   .then(data => {
-     this.data = data.results
-     let box = document.querySelector(".box");
-     for(let i = 0; i < data.results.length; i++){
-      let planet = data.results[i]
-       box.innerHTML += this._render(planet);
-     }
-   })
-   let content = document.querySelector(".progress.is-small.is-primary")
-   let box2 = document.querySelector(".box").innerHTML;
-  if(box2 !== " "){
+    let url = `https://swapi.boom.dev/api/planets`
+    let allPlanets = [];
+    let nextList = '';
+    while(url !== null){
+      await fetch(url, {
+        method: 'GET',
+      })
+      .then(res => res.json())
+      .then(data => {
+         url = data.next
+       // let planets = data.results
+        //let box = document.querySelector(".box");
+        for(let i = 0; i < data.results.length; i++){
+         let planet = data.results[i]
+         // box.innerHTML += this._render(planet);
+         allPlanets.push(planet)
+        }
+      })
+      
+    }
+     
+
+    
+      
+    
+  
+  // let content = document.querySelector(".progress.is-small.is-primary")
+   //let box2 = document.querySelector(".box").innerHTML;
+  //if(box2 !== " "){
+  //  content.style.display = "none"
+  //}
+  //console.log(allPlanets);
+  
+  return allPlanets
+  }
+ async _create(){
+    let planets = await this._load();
+    let box = document.querySelector(".box");
+    for(let i = 0; i < planets.length; i++){
+      let planet = planets[i]
+       box.innerHTML += this._render(planet)
+      //allPlanets.push(planet)
+    }
+
+     
+   
+  if(box.innerHTML !== " "){
+    let content = document.querySelector(".progress.is-small.is-primary")
     content.style.display = "none"
   }
-  }
-  _create(){
-    
   }
   
   _startLoading(){
@@ -93,12 +121,13 @@
 window.addEventListener("DOMContentLoaded", () => {
   // This block will be executed once the page is loaded and ready
   const app = new Application();
-  // Used to access the app instance by the automated tests
   app._load();
- //app._create()
+  app._create()
+  // Used to access the app instance by the automated tests
   window.__JS_APP = app;
 });
-    </script>
 
+
+    </script>
   </body>
 </html>
