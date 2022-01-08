@@ -69,8 +69,8 @@ export default class Application extends EventEmitter {
   //  content.style.display = "none"
   //}
   //console.log(allPlanets);
-  let content = document.querySelector("progress")
-  content.style.display = "none"
+ // let content = document.querySelector(".progress")
+ // content.style.display = "none"
   
   return allPlanets
   }
@@ -91,8 +91,20 @@ export default class Application extends EventEmitter {
   }
   }
   
-  _startLoading(){
-   
+  async _startLoading(){
+   let files = await this._load()
+   let myPromise = new Promise(function(myResolve, myReject) {
+   if(files){
+    let content = document.querySelector("progress")
+    content.style.display = "none"
+     myResolve('true')
+   }else{
+     myReject('false')
+   }
+    
+    
+      
+    });
   }
   _stopLoading(){
   
