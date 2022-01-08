@@ -8,12 +8,12 @@ export default class Application extends EventEmitter {
     };
   }
 
-  constructor(el) {
+  constructor() {
     super();
   //  this._loading = loading
   //let main = document.querySelector(".main")
   //main.innerHTML = el
-  const _loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
+   this._loading = '<progress class="progress is-small is-primary" max="100" ></progress>'
 
   let main = document.querySelector(".main")
    main.innerHTML = _loading
